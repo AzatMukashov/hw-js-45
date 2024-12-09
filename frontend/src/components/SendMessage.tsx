@@ -1,32 +1,40 @@
-import { FormEvent, useState } from 'react';
-import { sendMessage } from '../features/messagesSlice.ts';
-import { Alert, Box, Container, Paper, Snackbar, TextField, Typography } from '@mui/material';
-import { useAppDispatch } from '../app/hooks.ts';
-import Send from '@mui/icons-material/Send';
+import { FormEvent, useState } from "react";
+import { sendMessage } from "../features/messagesSlice.ts";
+import {
+  Alert,
+  Box,
+  Container,
+  Paper,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useAppDispatch } from "../app/hooks.ts";
+import Send from "@mui/icons-material/Send";
 
 const SendMessage = () => {
-  const [author, setAuthor] = useState('');
-  const [message, setMessage] = useState('');
+  const [author, setAuthor] = useState("");
+  const [message, setMessage] = useState("");
   const [open, setOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useAppDispatch();
   const handleClose = () => {
     setOpen(false);
-  }
+  };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!author || !message) {
-      setErrorMessage('Both fields are required!');
+      setErrorMessage("Both fields are required!");
       setOpen(true);
       return;
     }
-    dispatch(sendMessage({author, message}));
-    setAuthor('');
-    setMessage('');
+    dispatch(sendMessage({ author, message }));
+    setAuthor("");
+    setMessage("");
   };
   return (
     <Container>
-      <Paper elevation={3} sx={{padding: 2, marginTop: 2}}>
+      <Paper elevation={3} sx={{ padding: 2, marginTop: 2 }}>
         <Typography variant="h6" gutterBottom>
           Send a message
         </Typography>
@@ -55,7 +63,7 @@ const SendMessage = () => {
           />
           <Send
             type="submit"
-            sx={{mt: 2, cursor: 'pointer'}}
+            sx={{ mt: 2, cursor: "pointer" }}
             color="primary"
             onClick={handleSubmit}
           >
@@ -64,11 +72,7 @@ const SendMessage = () => {
         </Box>
       </Paper>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert
-          severity="error"
-          onClose={handleClose}
-          sx={{width: '100%'}}
-        >
+        <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
           {errorMessage}
         </Alert>
       </Snackbar>
